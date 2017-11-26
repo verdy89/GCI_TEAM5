@@ -1,39 +1,18 @@
 import numpy as np
 
 #numpy.arrayなら*,/は要素ごと
-#sigmoid,謎    x[0]ではなくx?
+#sigmoid
 def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x[0]))
 
-#bernoulliのサンプル,muはなに？
-def bern_sample(mu):
-    i=np.random.binomial(1, mu, 1)
-    val=np.zeros(2)
-    val[i]=1
-    return val
-
-#sample_data
-#Wいいのか？
-def sample_data(X, Sigma_w):
-    N=X.shape[1]
-    M=Sigma_w.shape[0]
-    W=np.random.multivariate_normal(np.zeros(M), Sigma_w).reshape(M,1)
-    Y=np.zeros((N,1))
-    for n in range(N):
-        temp=np.random.binomial(1, sigmoid(np.dot(W.T,(X[:, n].reshape(M,1)))), 1)
-        Y[n]=temp
-    return Y,W
-    
 """
 Compute variational parameters.
 """
 
 def VI(Y, X, M, Sigma_w, alpha, max_iter):
-    #わかる
     def rho2sig(rho):
         return np.log(1+np.exp(rho))
     
-    #謎、term1?dfdmu?
     def compute_df_dw(Y,X,Sigma_w,mu,rho,W):
         M,N=X.shape
         term1=(mu-W)/rho2sig(rho)**2

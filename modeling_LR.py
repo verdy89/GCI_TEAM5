@@ -68,6 +68,7 @@ M = 88
 Sigma_w = 100.0 * np.eye(M) 
 # num of data points
 #N = 560000 
+#何回サンプルするか(理想はデータ数だけどメモリが・・・)
 N=1000
 
 # inference
